@@ -130,7 +130,7 @@ BEGIN
     -- Generar el SQL para el procedimiento de eliminación
     vSQL := 'CREATE OR REPLACE FUNCTION ' || p_schemaname || '.del_' || p_tablename || '(' || vPrimaryKeyName || ' ' || (SELECT data_type FROM information_schema.columns WHERE table_schema = p_schemaname AND table_name = p_tablename AND column_name = vPrimaryKeyName) || ') RETURNS void AS $$' ||
     'BEGIN ' ||
-    'DELETE FROM ' || p_schemaname || '.' || p_tablename || ' WHERE ' || vPrimaryKeyName || ' = $1;' ||
+    'DELETE FROM ' || p_schemaname || '.' || p_tablename || ' WHERE ' || p_tablename || '.' || vPrimaryKeyName || ' = $1;' ||
     'END; $$ LANGUAGE plpgsql;';
 
     -- Ejecutar la sentencia SQL generada
@@ -262,3 +262,6 @@ CREATE TABLE public.alumnos ( -- Otra tabla de pruebas
 );
 
 
+select public.del_test_table(208400858)
+
+select * from test_table;
